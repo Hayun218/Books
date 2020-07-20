@@ -116,3 +116,124 @@
 
 #### 1.4 파이썬 스크립트 파일
 
+- 인터프리터로 대화형식이 아닌 파일을 만들어 저장한 후 컴파일 하는 방식
+  - 터미널에서 python 파일명.py  => 실행됨
+
+- 클래스 (class)
+
+  - 기본으로 적용되는 자료형이 아닌 새로운 클래스를 정의! --> 즉, 개발자의 독자적인 자료형을 만들기 
+
+  - 전용 함수와 속성을 정의 할 수 있다
+
+  - 클래스의 구조
+
+    - ```python
+      class 클래스 이름:
+          def __init__(self, parameter, ...): #생성자
+            	...
+          def 메서드 이름 1(self, parameter, ...): # 메서드 1
+            	...
+          def 메서드 이름 2(self, parameter, ...): # 메서드 2
+            	...
+      ```
+
+    - `__init__()` 클래스를 초기화하는 방법을 정의하는 특별한 메서드! =< 생성자 
+
+      - 클래스의 인스턴스가 만들어질 때 한번만 불림 
+
+        - 인스턴스란??
+
+          
+
+    - 메서드의 첫번째 인수로 자신(자신의 인스턴스)을 나타내는 self를 명시적으로 씀!
+
+    - 인스턴스 변수 = 인스턴스별로 저장되는 변수
+
+      - self.name 처럼 self 다음에 속성 이름을 써서 작성 or 접근 가능
+
+#### 1.5 넘파이
+
+- 딥러닝 구현에서는 배열이나 행렬 계산이 많이 등장! => 넘파이의 배열 클래스인 `numpy.array` 활용~
+
+- 넘파이 가져오기 
+
+  - `import numpy as np`
+
+  - 라이브러리 가져오기 => `import` 
+
+  - 참조하기 => `as np`  
+
+  - 넘파이 배열 생성 => `np.array()`
+
+  - 넘파이의 산술 연산
+
+    - 브로드캐스트: 넘파이 배열과 스칼라값의 조합으로 된 산술 연산도 가능!
+      - => 스칼라값과의 계산이 배열의 원소별로 한번씩 수행
+
+  - 넘파이의 N차원 배열
+
+    - 다차원 배열 작성 가능!!
+
+    - ```python
+      A = np.array([[1,2], [3.4]])
+      A.shape # (2,2) 2*2 행렬
+      A.dtype # dtype('int64') 행렬에 담긴 원소의 자료형
+      ```
+
+      - 1차원 배열 : 벡터 / 2차원 배열 : 행렬 / 3차원 배열 : 텐서
+
+  - 브로드캐스트
+    - 형상이 다른 배열끼리의 계산 
+    - ![broadcasting](https://github.com/Hayun218/Books/blob/master/밑바닥부터%20시작하는%20딥러닝/img/fig_broadcast_visual_1.png?raw=true)
+    - 출처: *http://www.astroml.org/book_figures/appendix/fig_broadcast_visual.html*
+
+- 원소 접근
+
+  - 원소의 인덱스 시작은 0 !
+
+  - X 원소의 0행 접근 -> `X[0]`
+
+  - X 원소의 (0,1) 위치 접근 -> `X[0][1]`
+
+  - for 문으로 각 원소 접근 가능!
+
+    - ```python
+      for row in X:
+        	print(row) # 모든 행 출력
+      ```
+
+  - 새로운 접근 방법 -> `X = X.flatten()` => X를 일차원 배열로 납작하게 변환!
+
+    - `X[X>15]` => 15보다 큰 원소만 접근가능
+
+      
+
+      *동적언어인 파이썬은 정적언어(컴파일 언어)인 C/C++ 보다 연산 처리 속도가 느림 => 파이썬에서 빠른 성능이 요구될 경우 해당 부분을 C/C++로 구현! => 넘파이도 주된 처리는 정적언어로 구현되어 있음*
+
+#### 1.6 matplotlib 
+
+- 그래프 그리는 라이브러리로 데이타를 시각화해야 하는 경우 유용하게 활용
+
+- 단순한 그래프 그리기
+  - matplotlib 의 **pyplot** 모듈 활용
+  - sin함수 그려보기
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+#데이터 준비하기
+x = np.arange(0, 6, 0.1) # 0~6까지 0.1간격으로
+y = np.sin(x)
+
+#그래프 그리기
+plt.plot(x,y,label="sin", linestyle="--")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend() # label 표기
+plt.show()
+```
+
+- 이미지 표시하기
+  - 이미지 표기 : pyplot 안에 있는 `imshow()` 메서드
+  - 이미지 읽기 : matplotlib.image 모듈의 `imread()` 메서드
